@@ -1,21 +1,19 @@
 import streamlit as st
 import pandas as pd
-import xgboost as xgb
+import pickle
+import xgboost as xgb # Penting agar model bisa dimuat
 
-st.title("Aplikasi Prediksi Harga Diamond")
+# Memuat model dan scaler
+with open('model_diamond.pkl', 'rb') as file:
+    model = pickle.load(file)
 
-# Memuat data
-@st.cache_data
-def load_data():
-    return pd.read_csv('diamonds.csv')
+with open('scaler.pkl', 'rb') as file:
+    scaler = pickle.load(file)
 
-df = load_data()
-st.write("Preview Data:", df.head())
+st.title("Prediksi Harga Berlian")
 
-# Input dari user
-karat = st.slider("Pilih berat karat:", 0.2, 5.0, 1.0)
-st.write(f"Anda memilih {karat} karat.")
-
-# Contoh tombol untuk prediksi
-if st.button("Prediksi"):
-    st.write("Model XGBoost akan memproses data Anda di sini...")
+# Di sini Anda bisa menambahkan input untuk user
+# karat = st.number_input("Masukkan Karat")
+# ... lalu lakukan scaling sebelum prediksi
+# data_input = scaler.transform([[karat, ...]])
+# prediksi = model.predict(data_input)
